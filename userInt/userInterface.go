@@ -21,7 +21,7 @@ func User() error {
 	// Prompt the user for the client name
 	fmt.Print("Enter the client name: ")
 	clientName, _ := reader.ReadString('\n')
-	clientName = clientName[:len(clientName)-1] // remove the newline character
+	clientName = clientName[:len(clientName)-1]
 
 	// Generate private key
 	privateKeyClient := exec.Command("wg", "genkey")
@@ -93,9 +93,7 @@ func User() error {
 
 	clientConf := fmt.Sprintf("\n[Peer]\n" +
 		fmt.Sprintf("PublicKey = %s\n", publicKeyClientReady) +
-		fmt.Sprintf("AllowedIPs = %s/24\n", lastIP.String()))
-
-	//clientConf = strings.Replace(clientConf, "[Peer]", "\n[Peer]", -1)
+		fmt.Sprintf("AllowedIPs = %s/32\n", lastIP.String()))
 
 	f, err := os.OpenFile("/etc/wireguard/wg0.conf", os.O_APPEND|os.O_WRONLY, 0644)
 	if err != nil {
