@@ -105,7 +105,7 @@ Save it and restart the networking service on your Ubuntu server to apply any ch
 ````
 sudo systemctl restart networking
 ````
-Try to download a binary file again! `:dizzy:`
+Try to download a binary file again! :dizzy:
 
 ## Developers
  [Destinyxus](https://github.com/Destinyxus)
