@@ -20,8 +20,16 @@ func main() {
 		err := os.Mkdir("/etc/wireguard/qrcodes", 0755)
 		if err != nil {
 			fmt.Println(err)
+
 		} else {
-			fmt.Println("Directory created successfully")
+			fmt.Println("QRcodes directory created successfully")
+		}
+
+		err = os.Mkdir("/etc/wireguard/userConfigs", 0755)
+		if err != nil {
+			log.Fatal(err)
+		} else {
+			fmt.Println("Config directory created")
 		}
 		// Generate private key
 		privateKeyCmd := exec.Command("wg", "genkey")
