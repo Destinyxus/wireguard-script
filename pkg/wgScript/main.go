@@ -104,6 +104,9 @@ func main() {
 			panic(err)
 		}
 
+		sysctlCmd2 := exec.Command("systemctl", "enable", "wg-quick@wg0.service")
+		err = sysctlCmd2.Run()
+
 		fmt.Println("WireGuard configuration complete")
 		userInt.User()
 

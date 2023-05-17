@@ -66,7 +66,6 @@ func User() error {
 	var lastIP net.IP
 	confLines := strings.Split(string(confBytes), "\n")
 	for i := range confLines {
-		// If the line starts with [Peer], get the next line that contains AllowedIPs
 		if strings.HasPrefix(confLines[i], "[Peer]") {
 			for j := i + 1; j < len(confLines); j++ {
 				if strings.HasPrefix(confLines[j], "AllowedIPs = ") {
@@ -131,11 +130,7 @@ func createUserConfig(privateKey, clientIP, servPubKey, servIP, clientName strin
 	config := fmt.Sprintf("[Interface]\nPrivateKey = %s\nAddress = %s/32\nDNS = 8.8.8.8\n\n[Peer]\nPublicKey = %s\nEndpoint = %s:51830\nAllowedIPs = 0.0.0.0/0\nPersistentKeepalive = 20\n",
 		privateKey, clientIP, servPubKey, servIP)
 
-	confFile, err := os.Create(fmt.Sprintf("/etc/wireguard/userConfigs/%s", clientName))
-
-	defer confFile.Close()
-
-	err = os.WriteFile(fmt.Sprintf("/etc/wireguard/userConfigs/config_%s.conf", clientName), []byte(config), 0600)
+	err := os.WriteFile(fmt.Sprintf("/etc/wireguard/userConfigs/config_%s.conf", clientName), []byte(config), 0600)
 	// Create QR code image
 	qrCode, err := qrcode.New(config, qrcode.Medium)
 	if err != nil {
